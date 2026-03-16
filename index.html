@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDS Tracker — Particularly Dangerous Situation Monitor</title>
+  <link rel="stylesheet" href="/styles/variables.css">
+  <link rel="stylesheet" href="/styles/base.css">
+  <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+  <div id="app">
+    <header id="header"></header>
+    <div id="stats-bar"></div>
+    <main id="alert-list"></main>
+    <footer>
+      <p>Data from <a href="https://api.weather.gov" target="_blank" rel="noopener">NWS API</a> · Auto-refreshes every 2 minutes</p>
+    </footer>
+  </div>
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
