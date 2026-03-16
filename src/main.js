@@ -10,6 +10,7 @@ import { filterPDSAlerts } from './utils/pdsFilter.js';
 import { renderHeader } from './ui/header.js';
 import { renderStatsBar } from './ui/statsBar.js';
 import { renderAlertList } from './ui/alertList.js';
+import { initNotifier, isNotificationsEnabled, toggleNotifications, processAlerts } from './notifications/notifier.js';
 
 let headerEl, statsBarEl, alertListEl;
 let refreshTimer = null;
@@ -21,7 +22,13 @@ function render() {
   const isLoading = store.get('isLoading');
   const error = store.get('error');
 
-  renderHeader(headerEl, { lastFetchTime, isLoading, onRefresh: fetchAndRender });
+  renderHeader(headerEl, {
+    lastFetchTime,
+    isLoading,
+    onRefresh: fetchAndRender,
+    notificationsEnabled: isNotificationsEnabled(),
+    onToggleNotifications: handleToggleNotifications
+  });
   renderStatsBar(statsBarEl, { pdsAlerts, allAlertCount });
   renderAlertList(alertListEl, { pdsAlerts, allAlertCount, isLoading, error });
 }
@@ -40,6 +47,8 @@ async function fetchAndRender() {
       lastFetchTime: fetchedAt,
       isLoading: false
     });
+
+    processAlerts(pdsAlerts);
   } catch (err) {
     console.error('Fetch failed:', err);
     store.update({
@@ -51,7 +60,13 @@ async function fetchAndRender() {
   render();
 }
 
+async function handleToggleNotifications() {
+  await toggleNotifications();
+  render();
+}
+
 function init() {
+  initNotifier();
   headerEl = document.getElementById('header');
   statsBarEl = document.getElementById('stats-bar');
   alertListEl = document.getElementById('alert-list');

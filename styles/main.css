@@ -51,6 +51,25 @@
   background: var(--bg-hover);
 }
 
+.header__notify {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 10px 18px;
+  border-radius: var(--border-radius);
+  font-size: 0.85rem;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.header__notify:hover {
+  background: var(--bg-hover);
+}
+
+.header__notify--on {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
 .header__refresh:disabled {
   opacity: 0.5;
   cursor: not-allowed;
